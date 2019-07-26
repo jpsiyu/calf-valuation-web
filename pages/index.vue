@@ -1,5 +1,7 @@
 <template>
-  <Balance />
+  <div class="index">
+    <Balance />
+  </div>
 </template>
 
 <script>
@@ -13,4 +15,8 @@ export default {
 </script>
 
 <style>
+.index{
+  width: 1200px;
+  margin: auto;
+}
 </style>
