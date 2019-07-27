@@ -11,28 +11,33 @@
 <script>
 import echarts from 'echarts'
 export default {
+  props: ["symbol"],
   data() {
     return {
-      symbol: '',
-      name: '',
       list: []
     }
   },
 
   mounted() {
-    this.reqFinance()
-      .then(_ => {
-        this.renderChart()
-      })
+      this.analyze()
+  },
+  watch: {
+    symbol() {
+      this.analyze()
+    }
   },
   methods: {
+    analyze() {
+      this.reqFinance()
+        .then(_ => {
+          this.renderChart()
+        })
+    },
     reqFinance() {
-      return this.$axios.get('/api/indicator?symbol=SZ000423')
+      return this.$axios.get(`/api/indicator?symbol=${this.symbol}`)
         .then(res => {
           const serverMsg = res.data
           const serverData = serverMsg.data
-          this.symbol = serverData.symbol
-          this.name = serverData.quote_name
           this.list = serverData.list
         })
     },
@@ -49,7 +54,7 @@ export default {
       const chart = echarts.init(this.$refs.chart)
       chart.setOption({
         title: {
-          text: `${this.name}成长性分析`,
+          text: '成长性分析',
           left: 'center',
         },
         legend: {

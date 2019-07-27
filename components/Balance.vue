@@ -30,23 +30,33 @@
 
 <script>
 export default {
+  props: ["symbol"],
   data() {
     return {
-      symbol: '',
-      name: '',
       list: []
     }
   },
   mounted() {
-    this.$axios.get("/api/balance?symbol=SZ000423")
-      .then(res => {
-        const serverMsg = res.data
-        const serverData = serverMsg.data
-        this.symbol = serverData.symbol
-        this.name = serverData.quote_name
-        this.list = serverData.list
-      })
+    this.analyze()
   },
+  watch: {
+    symbol() {
+      this.analyze()
+    }
+  },
+  methods: {
+    analyze() {
+      this.reqFiniance()
+    },
+    reqFiniance() {
+      this.$axios.get(`/api/balance?symbol=${this.symbol}`)
+        .then(res => {
+          const serverMsg = res.data
+          const serverData = serverMsg.data
+          this.list = serverData.list
+        })
+    }
+  }
 }
 </script>
 

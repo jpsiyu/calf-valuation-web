@@ -56,10 +56,9 @@
 <script>
 import echarts from 'echarts'
 export default {
+  props: ["symbol"],
   data() {
     return {
-      symbol: '',
-      name: '',
       list: [],
       fcf: [],
       fcfPredict: [],
@@ -67,44 +66,50 @@ export default {
     }
   },
   mounted() {
-    this.reqFinance()
-      .then(_ => {
-        this.fcf = this.list.map(e => {
-          const diff = e['ncf_from_oa'] - e['cash_paid_for_assets']
-          return diff.toFixed(2)
-        })
-      })
-      .then(() => {
-        return this.reqRunDcf()
-      })
-      .then(() => {
-        this.renderChart()
-      })
+      this.analyze()
+  },
+  watch: {
+    symbol() {
+      this.analyze()
+    }
   },
   methods: {
+    analyze() {
+      this.reqFinance()
+        .then(_ => {
+          this.fcf = this.list.map(e => {
+            const diff = e['ncf_from_oa'] - e['cash_paid_for_assets']
+            return diff.toFixed(2)
+          })
+        })
+        .then(() => {
+          return this.reqRunDcf()
+        })
+        .then(() => {
+          this.renderChart()
+        })
+    },
     reqFinance() {
-      return this.$axios.get('/api/cashflow?symbol=SZ000423')
+      return this.$axios.get(`/api/cashflow?symbol=${this.symbol}`)
         .then(res => {
           const serverMsg = res.data
           const serverData = serverMsg.data
-          this.symbol = serverData.symbol
-          this.name = serverData.quote_name
           this.list = serverData.list
         })
     },
     reqRunDcf() {
-      return this.$axios.get('/api/rundcf?symbol=SZ000423')
+      return this.$axios.get(`/api/rundcf?symbol=${this.symbol}`)
         .then(res => {
           const serverMsg = res.data
           const serverData = serverMsg.data
           this.dcfModel = serverData
         })
     },
-    calFcfAndPredict(){
+    calFcfAndPredict() {
       this.fcf = this.list.map(e => {
-          const diff = e['ncf_from_oa'] - e['cash_paid_for_assets']
-          return diff.toFixed(2)
-        })
+        const diff = e['ncf_from_oa'] - e['cash_paid_for_assets']
+        return diff.toFixed(2)
+      })
     },
     renderChart() {
       const passYears = []
@@ -131,7 +136,7 @@ export default {
         },
         xAxis: {
           data: years,
-          axisLabel:{
+          axisLabel: {
             rotate: 60,
           }
         },
@@ -174,35 +179,40 @@ export default {
 
 .dcf-chart {
   height: 400px;
+  margin: 30px 0;
 }
 
-.dcf-model h4{
+.dcf-model{
+  margin: 30px 0;
+}
+
+.dcf-model h4 {
   text-align: center;
 }
 
-.dcf-model .el-col{
+.dcf-model .el-col {
   display: flex;
   justify-content: space-between;
-  border: 1px #DCDFE6 solid;
+  border: 1px #dcdfe6 solid;
   padding: 10px 20px;
   box-sizing: border-box;
   border-radius: 20px;
   margin: 10px;
 }
 
-.el-col span:first-child{
+.el-col span:first-child {
   color: #606266;
 }
 
-.el-col span:last-child{
+.el-col span:last-child {
   color: #303133;
 }
 
-.dcf-target{
-  background-color: #67C23A;
+.dcf-target {
+  background-color: #67c23a;
 }
 
-.dcf-target span{
+.dcf-target span {
   color: white !important;
 }
 </style>

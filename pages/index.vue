@@ -1,28 +1,75 @@
 <template>
   <div class="index">
-    <Balance />
-    <Indicator />
-    <Dcf />
+    <Search @search="search" @clear="clear" />
+    <el-row v-if="symbol">
+      <h1 class="index-symbol">
+        {{symbolName}} {{symbol}}
+      </h1>
+    </el-row>
+    <template v-if="symbol">
+      <div class="index-section">
+        <Balance :symbol="symbol"/>
+      </div>
+      <div class="index-section">
+        <Indicator :symbol="symbol"/>
+      </div>
+      <div class="index-section">
+        <Dcf :symbol="symbol"/>
+      </div>
+    </template>
+    <template v-else>
+      <img class="index-img" src="~/assets/images/welcome.png" />
+    </template>
   </div>
 </template>
 
 <script>
+import Search from '~/components/Search.vue'
 import Balance from '~/components/Balance.vue'
 import Indicator from '~/components/Indicator.vue'
 import Dcf from '~/components/Dcf.vue'
 export default {
   components: {
+    Search,
     Balance,
     Indicator,
     Dcf,
   },
-  methods: {},
+  data() {
+    return {
+      symbol: '',
+      symbolName: '',
+    }
+  },
+  methods: {
+    search(event) {
+      this.symbol = event.symbol
+      this.symbolName = event.name
+    },
+    clear(){
+      this.symbol = ''
+      this.symbolName = ''
+    }
+  },
 }
 </script>
 
 <style>
-.index{
+.index {
   width: 960px;
-  margin: auto;
+  margin: 30px auto;
+}
+
+.index-symbol{
+  margin: 50px 0;
+}
+
+.index-section{
+  margin: 50px 0;
+}
+
+.index-img{
+  margin-top: 100px;
+  width: 300px;
 }
 </style>
