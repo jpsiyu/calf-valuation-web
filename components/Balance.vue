@@ -1,6 +1,6 @@
 <template>
   <div class="bl">
-    <el-row class="bl-title">
+    <el-row>
       <h2 class="bl-title">权益与负债</h2>
       <p class="bl-standard">选取标准：1.债务权益比 < 0.5; 2.流动比率 > 1.5</p>
     </el-row>

@@ -1,14 +1,17 @@
 <template>
   <div class="index">
     <Balance />
+    <Indicator />
   </div>
 </template>
 
 <script>
 import Balance from '~/components/Balance.vue'
+import Indicator from '~/components/Indicator.vue'
 export default {
   components: {
-    Balance
+    Balance,
+    Indicator,
   },
   methods: {},
 }
@@ -16,7 +19,7 @@ export default {
 
 <style>
 .index{
-  width: 1200px;
+  width: 960px;
   margin: auto;
 }
 </style>
