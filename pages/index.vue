@@ -58,6 +58,9 @@ export default {
 .index {
   width: 960px;
   margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .index-symbol{
@@ -66,10 +69,11 @@ export default {
 
 .index-section{
   margin: 50px 0;
+  width: 100%;
 }
 
 .index-img{
-  margin-top: 100px;
+  margin-top: 60px;
   width: 300px;
 }
 </style>

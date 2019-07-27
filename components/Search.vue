@@ -8,10 +8,10 @@
         v-model="search"
         @input="inputChange"
         @keyup.enter.native="clickSearch"
-        placeholder="输入股票代码:SZ000423" />
+        placeholder="输入股票代码:SZ000651" />
       <el-button class="search-btn" type="primary" @click="clickSearch">搜索</el-button>
     </el-row>
-    <el-row>
+    <el-row class="search-errWrap">
       <el-alert v-if="errTips" class="search-err" :title="errTips" type="error" @close="onCloseErrTips"/>
     </el-row>
   </div>
@@ -69,6 +69,10 @@ export default {
 .search-btn {
   width: 100px;
   margin-left: 20px;
+}
+
+.search-errWrap{
+  height: 40px;
 }
 
 .search-err{
