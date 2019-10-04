@@ -34,7 +34,7 @@ export default {
         })
     },
     reqFinance() {
-      return this.$axios.get(`/api/indicator?symbol=${this.symbol}`)
+      return this.$axios.get(`/va/indicator?symbol=${this.symbol}`)
         .then(res => {
           const serverMsg = res.data
           const serverData = serverMsg.data

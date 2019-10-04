@@ -49,7 +49,7 @@ export default {
       this.reqFiniance()
     },
     reqFiniance() {
-      this.$axios.get(`/api/balance?symbol=${this.symbol}`)
+      this.$axios.get(`/va/balance?symbol=${this.symbol}`)
         .then(res => {
           const serverMsg = res.data
           const serverData = serverMsg.data

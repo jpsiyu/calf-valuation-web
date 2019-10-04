@@ -90,7 +90,7 @@ export default {
         })
     },
     reqFinance() {
-      return this.$axios.get(`/api/cashflow?symbol=${this.symbol}`)
+      return this.$axios.get(`/va/cashflow?symbol=${this.symbol}`)
         .then(res => {
           const serverMsg = res.data
           const serverData = serverMsg.data
@@ -98,7 +98,7 @@ export default {
         })
     },
     reqRunDcf() {
-      return this.$axios.get(`/api/rundcf?symbol=${this.symbol}`)
+      return this.$axios.get(`/va/rundcf?symbol=${this.symbol}`)
         .then(res => {
           const serverMsg = res.data
           const serverData = serverMsg.data

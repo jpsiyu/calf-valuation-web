@@ -35,7 +35,7 @@ export default {
         return
       }
       const code = this.search.toUpperCase()
-      this.$axios.get(`/api/code?symbol=${code}`)
+      this.$axios.get(`/va/code?symbol=${code}`)
         .then(res => {
           const serverMsg = res.data
           if (serverMsg.errCode) {
